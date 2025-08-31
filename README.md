@@ -25,14 +25,3 @@ This project provides an authentication API with:
 
 Emails are printed to the console by default (console email backend).
 
-## Deploying to a cloud host (high-level)
-
-Recommended hosts: Render, Heroku, Railway.
-- Use a managed Postgres database in production.
-- Set environment variables for SECRET_KEY, DEBUG=False, ALLOWED_HOSTS, and any email API keys.
-- Run `python manage.py collectstatic --no-input` during build/deploy so WhiteNoise can serve static files.
-
-See platform docs for exact steps (we include links in the project's README in the zip).
-=======
-# Auth_Helper
->>>>>>> 2178ed23efd00e48ce00bf0d66f3f942457fa545
