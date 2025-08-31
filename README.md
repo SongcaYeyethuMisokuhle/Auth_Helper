@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # auth_api_service (Django Auth API)
 
 This project provides an authentication API with:
@@ -32,3 +33,6 @@ Recommended hosts: Render, Heroku, Railway.
 - Run `python manage.py collectstatic --no-input` during build/deploy so WhiteNoise can serve static files.
 
 See platform docs for exact steps (we include links in the project's README in the zip).
+=======
+# Auth_Helper
+>>>>>>> 2178ed23efd00e48ce00bf0d66f3f942457fa545
