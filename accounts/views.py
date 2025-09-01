@@ -10,8 +10,6 @@ from django.core.mail import send_mail, BadHeaderError
 from rest_framework.response import Response
 from rest_framework import status
 from django.urls import reverse
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-# from rest_framework_simplejwt.tokens import RefreshToken
 
 
 from django.db import transaction
