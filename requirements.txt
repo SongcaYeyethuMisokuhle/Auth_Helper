@@ -1,7 +1,14 @@
-Django>=4.2
-djangorestframework
-djangorestframework-simplejwt
-gunicorn
-whitenoise
-django-cors-headers
-sendgrid-django  # optional: use when you want production email via SendGrid
+asgiref==3.7.2
+colorama==0.4.6
+distlib==0.3.8
+Django==5.0.1
+djangorestframework==3.16.1
+filelock==3.15.1
+gunicorn==23.0.0
+packaging==25.0
+pillow==11.3.0
+platformdirs==4.2.2
+qrcode==8.2
+sqlparse==0.4.4
+tzdata==2023.4
+virtualenv==20.26.2

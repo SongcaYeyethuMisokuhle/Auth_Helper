@@ -6,30 +6,62 @@ from rest_framework.views import APIView
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from rest_framework.response import Response
 from rest_framework import status
 from django.urls import reverse
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
 
+
+from django.db import transaction
+import logging
+
+logger = logging.getLogger(__name__)
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+
+@method_decorator(csrf_exempt, name="dispatch")
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
 
+    @transaction.atomic
     def perform_create(self, serializer):
         user = serializer.save()
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
         verify_path = reverse('verify-email')
         verify_url = self.request.build_absolute_uri(f"{verify_path}?uid={uid}&token={token}")
-        send_mail(
-            'Verify your account',
-            f'Click the link to verify your account: {verify_url}',
-            None,
-            [user.email],
-        )
+
+        try:
+            send_mail(
+                subject='Verify your account',
+                message=f'Click the link to verify your account: {verify_url}',
+                from_email=None,  # falls back to DEFAULT_FROM_EMAIL
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            logger.exception("Verification email failed to send")
+# class RegisterView(generics.CreateAPIView):
+#     queryset = User.objects.all()
+#     permission_classes = [AllowAny]
+#     serializer_class = RegisterSerializer
+
+#     def perform_create(self, serializer):
+#         user = serializer.save()
+#         uid = urlsafe_base64_encode(force_bytes(user.pk))
+#         token = default_token_generator.make_token(user)
+#         verify_path = reverse('verify-email')
+#         verify_url = self.request.build_absolute_uri(f"{verify_path}?uid={uid}&token={token}")
+#         send_mail(
+#             'Verify your account',
+#             f'Click the link to verify your account: {verify_url}',
+#             None,
+#             [user.email],
+#         )
 
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]
