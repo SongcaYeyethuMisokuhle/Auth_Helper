@@ -5,9 +5,9 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # IMPORTANT: replace this in production using environment variables
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'replace-this-with-a-strong-key')
+SECRET_KEY = 'replace-this-with-a-strong-key'
 
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG =  'True'
 
 ALLOWED_HOSTS = ['auth-helper.onrender.com', 'localhost', '127.0.0.1']
 
@@ -94,8 +94,8 @@ SIMPLE_JWT = {
 }
 
 # Email settings - console backend for development (prints email to console)
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@authapi.com')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@authapi.com'
 
 # CORS - allow list for production (change to your front-end origins)
 CORS_ALLOWED_ORIGINS = [
